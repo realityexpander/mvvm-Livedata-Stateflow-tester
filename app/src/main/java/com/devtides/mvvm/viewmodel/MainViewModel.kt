@@ -15,6 +15,10 @@ class MainViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
 
     val itemLD = MutableLiveData<List<DataItem>>()
 
+    private val _stateFlow =
+        SaveableMutableSaveStateFlow(savedStateHandle, "FlowKey", 0)
+    val stateFlow = _stateFlow.asStateFlow()
+
     private val _liveDataPost =
         SafeMutableLiveData(savedStateHandle, "LivePostKey", 0)
     val liveDataPost: LiveData<Int> = _liveDataPost
@@ -26,10 +30,6 @@ class MainViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
     private val _liveDataSetLaunch =
         SafeMutableLiveData(savedStateHandle, "LiveSetLaunchKey", 0)
     val liveDataSetLaunch: LiveData<Int> = _liveDataSetLaunch
-
-    private val _stateFlow =
-        SaveableMutableSaveStateFlow(savedStateHandle, "FlowKey", 0)
-    val stateFlow = _stateFlow.asStateFlow()
 
 
     fun getItems() {
@@ -74,18 +74,6 @@ class MainViewModel(private val savedStateHandle: SavedStateHandle): ViewModel()
     }
 
     fun triggerLiveSetLaunch() {
-        viewModelScope.launch(Dispatchers.Default) {
-            repeat(10) {
-                delay(500)
-                launch(Dispatchers.Main) {
-                    ++_liveDataSetWithContext.value
-                }
-            }
-        }
-        Thread.sleep(1500)
-    }
-
-    fun triggerLiveSetLaunchData() {
         viewModelScope.launch(Dispatchers.Default) {
             repeat(10) {
                 delay(500)

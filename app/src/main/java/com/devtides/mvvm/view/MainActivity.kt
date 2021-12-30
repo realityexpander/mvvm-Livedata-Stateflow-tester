@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             }
             Text(text = "LiveData Set WithContext ${liveDataSetWithContextResult.value}")
 
-            Button(onClick = { viewModel.triggerLiveSetLaunchData() }) {
+            Button(onClick = { viewModel.triggerLiveSetLaunch() }) {
                 Text(text = "Click Me!")
             }
             Text(text = "LiveData Set Launch ${liveDataSetLaunchResult.value}")
